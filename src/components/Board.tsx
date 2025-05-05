@@ -9,23 +9,24 @@ type Prop = {
 };
 
 export default function Board({ boardStatus, tasks }: Prop) {
+  let design = "bg-stone-600";
   const { isOver, setNodeRef } = useDroppable({
     id: boardStatus,
   });
 
   if (isOver) {
-    console.log(boardStatus);
+    design = "bg-stone-500";
   }
 
   return (
-    <div className="h-full mt-10 w-62" ref={setNodeRef}>
-      <h3 className="text-amber-50 bg-stone-600 p-6 text-center">
+    <div className={`h-full mt-10 w-62`} ref={setNodeRef}>
+      <h3 className={`text-amber-50 ${design} p-6 text-center`}>
         {boardStatus}
       </h3>
       <div className="bg-stone-400 p-5">
         {tasks.map((task) => {
           if (task.status === boardStatus) {
-            return <Task task={task}></Task>;
+            return <Task task={task} key={task.id}></Task>;
           }
         })}
       </div>

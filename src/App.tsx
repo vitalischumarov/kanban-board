@@ -1,5 +1,6 @@
 import "./App.css";
 import Board from "./components/Board";
+import NewTask from "./components/NewTask";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { UniqueIdentifier } from "@dnd-kit/core";
 import { useState } from "react";
@@ -11,7 +12,8 @@ const allTasks = [
   {
     id: "1",
     title: "Titel 1",
-    desctiption: "Description of task One",
+    desctiption:
+      "Description of task One Description of task One Description of task One Description of task One",
     status: "Backlog",
   },
   {
@@ -44,37 +46,45 @@ function App() {
       let newArray = tasks.map((task) => {
         if (task.id === active.id) {
           task.status = "Backlog";
+          return { ...task };
         }
-        return;
+        return task;
       });
-      setTasks([...tasks, newArray]);
+      setTasks(newArray);
     } else if (over && over.id === "Done") {
       let newArray = tasks.map((task) => {
         if (task.id === active.id) {
           task.status = "Done";
+          return { ...task };
         }
-        return;
+        return task;
       });
-      setTasks([...tasks, newArray]);
+      setTasks(newArray);
     } else {
       let newArray = tasks.map((task) => {
         if (task.id === active.id) {
           task.status = "In Progress";
+          return { ...task };
         }
-        return;
+        return task;
       });
-      setTasks([...tasks, newArray]);
+      setTasks(newArray);
     }
   }
 
   return (
-    <DndContext onDragEnd={handleDragEnd}>
-      <div className="bg-stone-900 h-screen flex justify-center gap-50">
-        {boards.map((board) => {
-          return <Board boardStatus={board} tasks={tasks}></Board>;
-        })}
-      </div>
-    </DndContext>
+    <div className="bg-stone-900 h-screen">
+      <NewTask></NewTask>
+      <DndContext onDragEnd={handleDragEnd}>
+        <div className=" flex justify-center gap-50">
+          {boards.map((board) => {
+            return (
+              <Board boardStatus={board} tasks={tasks} key={board}></Board>
+            );
+          })}
+        </div>
+      </DndContext>
+    </div>
   );
 }
 
