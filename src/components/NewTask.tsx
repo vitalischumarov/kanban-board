@@ -1,6 +1,5 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { taskType } from "../dataTypes/taskType";
-import { UniqueIdentifier } from "@dnd-kit/core";
 
 var newTask: taskType = {
   title: "",
@@ -10,7 +9,7 @@ var newTask: taskType = {
 };
 
 type Prop = {
-  addFunction: (item: taskType) => {};
+  addFunction: (item: taskType) => void;
 };
 
 export default function NewTask({ addFunction }: Prop) {
