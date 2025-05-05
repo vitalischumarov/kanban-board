@@ -72,9 +72,13 @@ function App() {
     }
   }
 
+  function addNewTask(item: taskType) {
+    setTasks((prev) => [...prev, item]);
+  }
+
   return (
     <div className="bg-stone-900 h-screen">
-      <NewTask></NewTask>
+      <NewTask addFunction={addNewTask}></NewTask>
       <DndContext onDragEnd={handleDragEnd}>
         <div className=" flex justify-center gap-50">
           {boards.map((board) => {
