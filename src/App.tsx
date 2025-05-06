@@ -3,16 +3,34 @@ import Board from "./components/Board";
 import NewTask from "./components/NewTask";
 import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { UniqueIdentifier } from "@dnd-kit/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { taskType } from "./dataTypes/taskType";
 import { supabase } from "./supabase-client";
 
 const boards: UniqueIdentifier[] = ["Backlog", "In Progress", "Done"];
 
-const allTasks: taskType[] = [];
-
 function App() {
-  const [tasks, setTasks] = useState<taskType[]>(allTasks);
+  const [tasks, setTasks] = useState<taskType[]>([]);
+
+  async function loadData() {
+    const { error, data } = await supabase.from("kanbanTasks").select("*");
+    if (error) {
+      console.log(error);
+      return [];
+    }
+    if (data) {
+      return data as taskType[];
+    }
+    return [];
+  }
+
+  useEffect(() => {
+    async function fetchData() {
+      const loadedTasks = await loadData();
+      setTasks(loadedTasks || []);
+    }
+    fetchData();
+  }, []);
 
   function handleDragEnd(event: DragEndEvent) {
     const { over, active } = event;
