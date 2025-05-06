@@ -48,7 +48,7 @@ function App() {
   }
 
   async function addNewTask(item: taskType) {
-    const { error, data } = await supabase.from("kanbanTasks").insert(item);
+    const { error } = await supabase.from("kanbanTasks").insert(item);
 
     if (error) {
       console.log(`error: ${error}`);
