@@ -12,6 +12,17 @@ const boards: UniqueIdentifier[] = ["Backlog", "In Progress", "Done"];
 function App() {
   const [tasks, setTasks] = useState<taskType[]>([]);
 
+  async function updateTask(task: taskType) {
+    const { error } = await supabase
+      .from("kanbanTasks")
+      .update({ status: task.status })
+      .eq("id", task.id);
+
+    if (error) {
+      console.log(error);
+    }
+  }
+
   async function loadData() {
     const { error, data } = await supabase.from("kanbanTasks").select("*");
     if (error) {
@@ -39,6 +50,7 @@ function App() {
       let newArray = tasks.map((task) => {
         if (task.id === active.id) {
           task.status = "Backlog";
+          updateTask(task);
           return { ...task };
         }
         return task;
@@ -48,6 +60,7 @@ function App() {
       let newArray = tasks.map((task) => {
         if (task.id === active.id) {
           task.status = "Done";
+          updateTask(task);
           return { ...task };
         }
         return task;
@@ -57,6 +70,7 @@ function App() {
       let newArray = tasks.map((task) => {
         if (task.id === active.id) {
           task.status = "In Progress";
+          updateTask(task);
           return { ...task };
         }
         return task;
