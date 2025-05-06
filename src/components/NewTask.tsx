@@ -50,6 +50,7 @@ export default function NewTask({ addFunction }: Prop) {
         className="bg-white text-black"
         name="title"
         value={String(input.title)}
+        placeholder="title"
         onChange={clickHandler}
       />
       <input
@@ -57,6 +58,7 @@ export default function NewTask({ addFunction }: Prop) {
         className="bg-white w-90 text-black"
         name="description"
         value={String(input.desctiption)}
+        placeholder="description"
         onChange={clickHandler}
       />
       <button className="bg-amber-400 p-2" onClick={addNewTask}>
