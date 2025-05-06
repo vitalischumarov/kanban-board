@@ -4,13 +4,19 @@ import { taskType } from "../dataTypes/taskType";
 var newTask: taskType = {
   title: "",
   desctiption: "",
-  id: Math.random(),
+  id: getRandomIntInclusive(100, 1),
   status: "Backlog",
 };
 
 type Prop = {
   addFunction: (item: taskType) => void;
 };
+
+function getRandomIntInclusive(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 export default function NewTask({ addFunction }: Prop) {
   const [input, setInput] = useState(newTask);
@@ -30,8 +36,11 @@ export default function NewTask({ addFunction }: Prop) {
 
   function addNewTask() {
     addFunction(input);
-    setInput({ ...input, ...{ title: "" } });
-    setInput({ ...input, ...{ desctiption: "" } });
+    setInput({
+      ...input,
+      title: "",
+      desctiption: "",
+    });
   }
 
   return (
