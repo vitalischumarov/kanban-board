@@ -15,16 +15,26 @@ export default function Task({ task }: Prop) {
     transform: CSS.Translate.toString(transform),
   };
 
+  function deleteTask() {
+    alert(`deleted ${task.id}`);
+    console.log("worked");
+  }
+
   return (
-    <div
-      className="bg-stone-200 p-3 mb-4 hover:cursor-pointer"
-      ref={setNodeRef}
-      style={style}
-      {...listeners}
-      {...attributes}
-    >
-      <h4 className="pb-3.5 font-bold">{task.title}</h4>
-      <p>{task.desctiption}</p>
+    <div className="bg-stone-200 p-3 mb-4 " ref={setNodeRef} style={style}>
+      <div className="hover:cursor-pointer" {...listeners} {...attributes}>
+        <h4 className="pb-3.5 font-bold">{task.title}</h4>
+        <p>{task.desctiption}</p>
+      </div>
+      <button
+        className="bg-red-300"
+        onClick={(e) => {
+          e.stopPropagation();
+          deleteTask();
+        }}
+      >
+        delete
+      </button>
     </div>
   );
 }
